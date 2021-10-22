@@ -8,12 +8,17 @@ import (
 
 // Bilangan Prima
 func IsPrime(value int) bool {
-	for i := 2; i <= int(math.Floor(float64(value)/2)); i++ {
-		if value%i == 0 {
-			return false
+	if value < 2 {
+		return false
+	} else {
+		pangkat := int(math.Sqrt(float64(value)))
+		for i := 2; i <= pangkat; i++ {
+			if int(value)%i == 0 {
+				return false
+			}
 		}
 	}
-	return value > 1
+	return true
 }
 
 // Fast Exponent logarithmic
@@ -56,6 +61,39 @@ func ArrayMerge(a1, a2 []string) []string {
 
 // Muncul sekali
 
+func munculSekali(a string) []int {
+	charAngka := map[string]int{
+		"0": 0,
+		"1": 1,
+		"2": 2,
+		"3": 3,
+		"4": 4,
+		"5": 5,
+		"6": 6,
+		"7": 7,
+		"8": 8,
+		"9": 9,
+	}
+
+	notSame := true
+	var angka []int
+	for i := 0; i < len(a); i++ {
+		notSame = true
+		for j := 0; j < len(a); j++ {
+			if a[i] == a[j] && i != j {
+				notSame = false
+				break
+			}
+		}
+
+		if notSame == true {
+			angka = append(angka, charAngka[string(a[i])])
+		}
+	}
+
+	return angka
+}
+
 // Pair Target With sum
 func PairTargetWithSum(nums []int, target int) []int {
 	mymap := make(map[int]int)
@@ -72,11 +110,36 @@ func PairTargetWithSum(nums []int, target int) []int {
 }
 
 func main() {
-	var prime int64
-	fmt.Printf("Masukkan Angka yang ingin dicheck: ")
-	fmt.Scan(&prime)
-	IsPrime(int(prime))
+	fmt.Println(IsPrime(1000000007)) // true
 
-	fmt.Println(ArrayMerge([]string{“sergei”, “jin”}, []string{“jin”, “steve”, “bryan”}))
+	fmt.Println(IsPrime(1500450271)) // true
+
+	fmt.Println(IsPrime(1000000000)) // false
+
+	fmt.Println(IsPrime(10000000019)) // true
+
+	fmt.Println(IsPrime(10000000033)) // true
+
+	fmt.Println(powBig(2, 3))
+	fmt.Println(powBig(7, 2))
+	fmt.Println(powBig(10, 5))
+	fmt.Println(powBig(17, 6))
+	fmt.Println(powBig(5, 3))
+
+	fmt.Println(ArrayMerge([]string{"king", "devil jin", "akuma"}, []string{"eddie", "steve", "geese"}))
+	fmt.Println(ArrayMerge([]string{"sergei", "jin"}, []string{"jin", "steve", "bryan"}))
+	fmt.Println(ArrayMerge([]string{"alisa", "yoshimitsu"}, []string{"devil jin", "yoshimitsu", "alisa", "law"}))
+	fmt.Println(ArrayMerge([]string{}, []string{"devil jin", "sergei"}))
+
+	fmt.Println(munculSekali("1234123"))
+	fmt.Println(munculSekali("76523752"))   // [6, 3]
+	fmt.Println(munculSekali("12345"))      // [1 2 3 4 5]
+	fmt.Println(munculSekali("1122334455")) // []
+	fmt.Println(munculSekali("0872504"))    // [8 7 2 5 4]
+
 	fmt.Println(PairTargetWithSum([]int{1, 2, 3, 4, 6}, 6))
+	fmt.Println(PairTargetWithSum([]int{2, 5, 9, 11}, 11)) // [0, 2]
+	fmt.Println(PairTargetWithSum([]int{1, 3, 5, 7}, 12))  // [2, 3]
+	fmt.Println(PairTargetWithSum([]int{1, 4, 6, 8}, 10))  // [1, 2]
+	fmt.Println(PairTargetWithSum([]int{1, 5, 6, 7}, 6))   // [0, 1]
 }
